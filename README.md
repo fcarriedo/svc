@@ -12,7 +12,7 @@ find an easy way to do it. I tried a couple of Windows Service wrappers like
 
 After spending a whole day on this mundane task, I found [kardianos's awesome
 project](https://bitbucket.org/kardianos/service) which lets you, albeit
-programatically install, arbitrary programs as windows services. It seems to
+programatically, install arbitrary programs as windows services. It seems to
 support other unix-like systems as well.
 
 ### Usage
