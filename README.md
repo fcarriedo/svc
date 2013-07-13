@@ -15,36 +15,56 @@ project](https://bitbucket.org/kardianos/service) which lets you, albeit
 programatically, install arbitrary programs as windows services. It seems to
 support other unix-like systems as well.
 
+### Prerequisites
+
+You have to have kardianos's awesome `service` project. It is the only
+dependency.
+
+```
+  go get https://bitbucket.org/kardianos/service
+```
+
 ### Usage
 
-Kind of in the same spirit of `winsw`, you gotta:
+Clone the project:
 
-  * Download the executable from here (missing link - use gh releases)
-  * Rename the downloaded executable with whatever name you want and put it on
-    the same directory as the executable that you want to run as a service. For
-    the sake of the example: `nginx-svc.exe`.
-  * Create a `svc.xml` file on the same directory that describes the service as
-    well as the formulas on how to run it and how to stop it. An example:
+```
+  git clone https://github.com/fcarriedo/svc
+```
 
-```xml
+Put the `svc.go` file on the directory where your *to-be-service* is located.
+
+Open the `svc.go` file and update the `svcDescriptor` with the details of your
+executable.  For the sake of the example, lets say we want to embed `nginx` in
+our `nginx-svc.exe` service wrapper:
+
+```go
+var svcDescriptor = `
 <service>
   <id>nginx</id>
   <name>nginx</name>
-  <description>nginx awesomeness</description>
-  <executable>C:/Apps/nginx/nginx.exe</executable>
+  <desc>nginx awesomeness</desc>
+  <exec>C:/Apps/nginx/nginx.exe</exec>
   <args>-p C:/Apps/nginx</args>
+  <stopexec>C:/Apps/nginx/nginx.exe</stopexec>
   <stopargs>-p C:/Apps/nginx -s stop</stopargs>
 </service>
+`
 ```
 
-  * Install your app as a service running (The following commands need to be
-    run as *Administrator*)
+Compile it:
+
+```
+  go build svc.go -o nginx-svc.exe
+```
+
+Now your ready to install your service and/or manipulate it.
+
+To install it:
 
 ```
   nginx-svc.exe install
 ```
-
-And that's it. You should see your app installed as a service.
 
 You can also start and stop the service from your executable as:
 
@@ -58,23 +78,9 @@ Or remove it from services as:
   nginx-svc.exe remove
 ```
 
-### Build from source
-
-First you gotta install kardianos's awesome `service` project. It is the only
-dependency.
-
-```
-  go get https://bitbucket.org/kardianos/service
-```
-
-Then clone the project and build it:
-
-```
-  git clone https://github.com/fcarriedo/svc
-  cd svc
-  go build
-```
-
-You should be ready to go.
-
 **Note**: This should work for linux/unix like systems but hasn't been tested.
+
+**Note 2**: I couln't put the service descriptor as a file as of now. It was
+causing a failure when starting it from the serivces (I believe it is
+permission related). For now, you'll just have to compile it. I know it sucks
+but I'll leave it like that until I can investigate further.
