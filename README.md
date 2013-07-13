@@ -22,7 +22,7 @@ Kind of in the same spirit of `winsw`, you gotta:
   * Download the executable from here (missing link - use gh releases)
   * Rename the downloaded executable with whatever name you want and put it on
     the same directory as the executable that you want to run as a service. For
-    the sake of the example: `myapp-service.exe`.
+    the sake of the example: `nginx-svc.exe`.
   * Create a `svc.xml` file on the same directory that describes the service as
     well as the formulas on how to run it and how to stop it. An example:
 
@@ -32,15 +32,16 @@ Kind of in the same spirit of `winsw`, you gotta:
   <name>nginx</name>
   <description>nginx awesomeness</description>
   <executable>C:/Apps/nginx/nginx.exe</executable>
-  <artuments>-p C:/Apps/nginx</arguments>
-  <stoparguments>-p C:/Apps/nginx -s stop</stoparguments>
+  <args>-p C:/Apps/nginx</args>
+  <stopargs>-p C:/Apps/nginx -s stop</stopargs>
 </service>
 ```
 
-  * Install your app as a service running
+  * Install your app as a service running (The following commands need to be
+    run as *Administrator*)
 
 ```
-  myapp-service.exe install
+  nginx-svc.exe install
 ```
 
 And that's it. You should see your app installed as a service.
@@ -48,13 +49,13 @@ And that's it. You should see your app installed as a service.
 You can also start and stop the service from your executable as:
 
 ```
-  myapp-service.exe [start|stop]
+  nginx-svc.exe [start|stop]
 ```
 
-Or remove it from the services as:
+Or remove it from services as:
 
 ```
-  myapp-services.exe remove
+  nginx-svc.exe remove
 ```
 
 ### Build from source
