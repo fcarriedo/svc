@@ -1,6 +1,6 @@
 # svc
 
-Tool that lets you install a arbitrary executables as a service
+Tool that lets you install an arbitrary executables as a service
 
 ### Why
 
